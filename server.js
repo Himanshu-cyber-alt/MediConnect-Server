@@ -231,7 +231,7 @@ app.use("/api/doctorappointments", doctorAppointment);
 app.use("/api/auth", authRoutes);
 
 // ============================
-const PORT = 5000;
+const PORT = 5000 || process.env.PORT;
 server.listen(PORT, () =>
   console.log(`🚀 Server running on http://localhost:${PORT}`)
 );
