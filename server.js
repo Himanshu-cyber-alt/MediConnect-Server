@@ -30,7 +30,7 @@ import doctorAppointment from "./routes/doctorAppointmentRoutes.js"
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "https://mediconnect-gc7w.onrender.com" } });
+const io = new Server(server, { cors: { origin: "https://mediconnect-xp3k.onrender.com" } });
 
 
 
@@ -95,7 +95,7 @@ const io = new Server(server, { cors: { origin: "https://mediconnect-gc7w.onrend
 //   });
 // });
 
-// app.use(cors({ origin: "https://mediconnect-gc7w.onrender.com" }));
+// app.use(cors({ origin: "https://mediconnect-xp3k.onrender.com" }));
 // app.use(express.json());
 
 
@@ -116,7 +116,7 @@ const io = new Server(server, { cors: { origin: "https://mediconnect-gc7w.onrend
 
 
 // app.use((req, res, next) => {
-//   res.header("Access-Control-Allow-Origin", "https://mediconnect-gc7w.onrender.com");
+//   res.header("Access-Control-Allow-Origin", "https://mediconnect-xp3k.onrender.com");
 //   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 //   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
 //   if (req.method === "OPTIONS") return res.sendStatus(200);
@@ -218,7 +218,7 @@ socket.on("callResponse", ({ accepted, patientSocket, roomId }) => {
 // ============================
 // Express middleware & routes
 // ============================
-app.use(cors({ origin: "https://mediconnect-gc7w.onrender.com" }));
+app.use(cors({ origin: "https://mediconnect-xp3k.onrender.com" }));
 app.use(express.json());
 
 app.use("/api/patients", registerLogin);
