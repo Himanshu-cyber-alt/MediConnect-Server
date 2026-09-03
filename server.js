@@ -1,17 +1,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 import express from "express";
 
 import cors from "cors";
@@ -30,7 +19,7 @@ import doctorAppointment from "./routes/doctorAppointmentRoutes.js"
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: "https://mediconnect-xp3k.onrender.com" } });
+const io = new Server(server, { cors: { origin: "http://mediconnect-health-application.s3-website.ap-south-1.amazonaws.com" } });
 
 
 
@@ -128,7 +117,7 @@ socket.on("callResponse", ({ accepted, patientSocket, roomId }) => {
 // ============================
 // Express middleware & routes
 // ============================
-app.use(cors({ origin: "https://mediconnect-xp3k.onrender.com" }));
+app.use(cors({ origin: "http://mediconnect-health-application.s3-website.ap-south-1.amazonaws.com" }));
 app.use(express.json());
 
 app.use("/api/patients", registerLogin);
