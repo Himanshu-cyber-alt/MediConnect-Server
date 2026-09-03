@@ -37,3 +37,26 @@ jobs:
       - name: Push image to ECR
         run: |
           docker push 541739391357.dkr.ecr.ap-south-1.amazonaws.com/mediconnect-server-image:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            aws ecr get-login-password --region ap-south-1 | sudo docker login --username AWS --password-stdin 541739391357.dkr.ecr.ap-south-1.amazonaws.com
+
+            sudo docker pull 541739391357.dkr.ecr.ap-south-1.amazonaws.com/mediconnect-server-image:latest
+
+            sudo docker stop mediconnect-container || true
+            sudo docker rm mediconnect-container || true
+
+            sudo docker run -d \
+              --name mediconnect-container \
+              --env-file /home/ec2-user/MediConnect-Server/.env \
+              -p 5000:5000 \
+              541739391357.dkr.ecr.ap-south-1.amazonaws.com/mediconnect-server-image:latest
+
+
+
