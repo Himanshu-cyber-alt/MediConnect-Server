@@ -1,17 +1,39 @@
-name: CI/CD Pipeline
+name: Pipeline For Mediconnect Backend
 
 on:
   push:
     branches:
       - main
 
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Get code from repo
+        uses: actions/checkout@v4
 
-      - name: Trigger Render Deploy
-        run: curl -X POST ${{ secrets.RENDER_DEPLOY_HOOK }}
+      - name: Connect to AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ap-south-1
+
+      - name: Login to AWS ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        run: |
+          docker build -t mediconnect-server-img .
+
+      - name: Tag Docker image
+        run: |
+          docker tag mediconnect-server-img:latest 541739391357.dkr.ecr.ap-south-1.amazonaws.com/mediconnect-server-image:latest
+
+      - name: Push image to ECR
+        run: |
+          docker push 541739391357.dkr.ecr.ap-south-1.amazonaws.com/mediconnect-server-image:latest
